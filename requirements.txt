@@ -1,0 +1,28 @@
+# LlamaIndex 核心库
+llama-index-core>=0.10.0
+
+# LlamaIndex 存储后端
+llama-index-vector-stores-pinecone>=0.1.0
+llama-index-storage-docstore-mongodb>=0.1.0
+llama-index-storage-index-store-mongodb>=0.1.0
+llama-index-vector-stores-neo4jvector>=0.1.0
+llama-index-graph-stores-neo4j>=0.1.0
+
+# LlamaIndex LLM 和 Embedding
+llama-index-llms-google-genai>=0.1.0
+llama-index-embeddings-google-genai>=0.1.0
+
+# 第三方存储客户端
+pinecone-client>=3.0.0
+pymongo>=4.6.0
+neo4j>=5.0.0
+
+# 配置和环境变量
+python-dotenv>=1.0.0
+pyyaml>=6.0
+
+# 追踪和监控
+langfuse>=2.0.0
+openinference-instrumentation-llama-index>=0.1.0
+opentelemetry-api>=1.20.0
+opentelemetry-sdk>=1.20.0

@@ -1,0 +1,28 @@
+storage:
+  pinecone:
+    index_name: "llamaindex"
+    dimension: 768
+    metric: "cosine"
+    cloud: "aws"
+    region: "us-east-1"
+  
+  mongodb:
+    db_name: "llamaindex"
+    summary_index:
+      collection_name: "summary_index"
+      namespace: "summary"
+    tree_index:
+      collection_name: "tree_index"
+      namespace: "tree"
+    keyword_index:
+      collection_name: "keyword_index"
+      namespace: "keyword"
+  
+  neo4j:
+    url: "neo4j+s://your-instance-id.databases.neo4j.io"
+    username: "your_username"
+    password: "your_password"
+    database: "your_database"
+    index_name: "property_graph"
+    text_node_property: "text"
+    hybrid_search: false
