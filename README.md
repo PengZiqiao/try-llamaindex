@@ -21,15 +21,32 @@
   - 支持自定义请求间隔
   - 支持自定义 embedding 维度
 
+- **容错机制**：
+  - 云端存储失败时自动保存到本地
+  - 本地存储目录结构清晰
+  - 支持从本地恢复索引
+
+- **云端同步**：
+  - 将本地索引同步到云端存储
+  - 支持批量同步所有索引
+  - 提供详细的同步状态报告
+
 ## 项目结构
 
 ```
 try_llamaindex/
 ├── book/                    # 文档目录
 │   └── 三国演义.txt
+├── storage/                 # 本地索引存储目录（不提交到 Git）
+│   ├── vector_index/
+│   ├── summary_index/
+│   ├── tree_index/
+│   ├── keyword_index/
+│   └── property_graph_index/
 ├── models.py                # 模型配置（LLM 和 Embedding）
 ├── storage.py               # 存储管理器
-├── process_document.py      # 文档处理和索引创建
+├── process_document.py      # 文档处理和索引创建（带容错）
+├── sync_to_cloud.py        # 本地索引同步到云端
 ├── hybrid_retrieval.py     # 混合检索
 ├── create_indexes.py       # 索引创建示例
 ├── config.yaml            # 配置文件（不提交到 Git）
@@ -102,8 +119,22 @@ python process_document.py
 - 进行文档分块
 - 创建向量索引、摘要索引、树索引、关键词索引、属性图索引
 - 将索引存储到相应的存储后端
+- **如果云端存储失败，自动保存到本地 `storage/` 目录**
 
-### 2. 混合检索
+### 2. 同步本地索引到云端
+
+如果之前创建索引时云端存储失败，索引会保存在本地。可以使用以下脚本同步到云端：
+
+```bash
+python sync_to_cloud.py
+```
+
+这将：
+- 从本地 `storage/` 目录加载所有索引
+- 将索引同步到对应的云端存储（Pinecone、MongoDB、Neo4j）
+- 显示详细的同步状态报告
+
+### 3. 混合检索
 
 运行混合检索程序：
 
@@ -117,7 +148,7 @@ python hybrid_retrieval.py
 - 根据问题自动选择最合适的检索策略
 - 综合多个索引的结果生成答案
 
-### 3. 自定义查询
+### 4. 自定义查询
 
 在 `hybrid_retrieval.py` 中修改 `questions` 列表，或直接使用代码：
 

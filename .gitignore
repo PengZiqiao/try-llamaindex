@@ -2,6 +2,9 @@
 .env
 config.yaml
 
+# 本地存储目录
+storage/
+
 # Python
 __pycache__/
 *.py[cod]
