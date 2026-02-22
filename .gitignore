@@ -1,6 +1,5 @@
-# 环境变量和配置文件
+# 环境变量文件
 .env
-config.yaml
 
 # 本地存储目录
 storage/

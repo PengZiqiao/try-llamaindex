@@ -144,7 +144,8 @@ class RateLimitedGoogleGenAIEmbedding(GoogleGenAIEmbedding):
         await asyncio.sleep(self._request_delay)
         
         if self._embedding_config is not None:
-            result = await self._client.models.embed_content(
+            result = await asyncio.to_thread(
+                self._client.models.embed_content,
                 model=self.model_name,
                 contents=text,
                 config=self._embedding_config
@@ -158,7 +159,8 @@ class RateLimitedGoogleGenAIEmbedding(GoogleGenAIEmbedding):
         await asyncio.sleep(self._request_delay)
         
         if self._embedding_config is not None:
-            result = await self._client.models.embed_content(
+            result = await asyncio.to_thread(
+                self._client.models.embed_content,
                 model=self.model_name,
                 contents=texts,
                 config=self._embedding_config
@@ -172,7 +174,8 @@ class RateLimitedGoogleGenAIEmbedding(GoogleGenAIEmbedding):
         await asyncio.sleep(self._request_delay)
         
         if self._embedding_config is not None:
-            result = await self._client.models.embed_content(
+            result = await asyncio.to_thread(
+                self._client.models.embed_content,
                 model=self.model_name,
                 contents=query,
                 config=self._embedding_config

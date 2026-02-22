@@ -19,10 +19,7 @@ storage:
       namespace: "keyword"
   
   neo4j:
-    url: "neo4j+s://your-instance-id.databases.neo4j.io"
-    username: "your_username"
-    password: "your_password"
-    database: "your_database"
+    database: "75565d13"
     index_name: "property_graph"
     text_node_property: "text"
     hybrid_search: false
