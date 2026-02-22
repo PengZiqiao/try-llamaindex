@@ -2,7 +2,7 @@ import os
 import nest_asyncio
 from llama_index.core import (
     VectorStoreIndex,
-    SummaryIndex,
+    DocumentSummaryIndex,
     TreeIndex,
     KeywordTableIndex,
     StorageContext,
@@ -33,7 +33,7 @@ def load_vector_index():
     """
     print("=== 加载向量索引 ===")
     storage_manager = StorageManager()
-    storage_context = storage_manager.get_vector_storage_context()
+    storage_context = storage_manager.get_pinecone_storage_context()
     
     # 从存储上下文加载索引
     index = VectorStoreIndex.from_vector_store(
@@ -49,14 +49,14 @@ def load_summary_index():
     从 MongoDB 加载摘要索引
     
     Returns:
-        SummaryIndex: 摘要索引实例
+        DocumentSummaryIndex: 摘要索引实例
     """
     print("=== 加载摘要索引 ===")
     storage_manager = StorageManager()
-    storage_context = storage_manager.get_summary_index_storage_context()
+    storage_context = storage_manager.get_mongodb_storage_context(namespace="summary_index")
     
     # 从存储上下文加载索引
-    index = SummaryIndex.from_documents([], storage_context=storage_context)
+    index = DocumentSummaryIndex.from_documents([], storage_context=storage_context)
     print("摘要索引加载成功")
     return index
 
@@ -70,7 +70,7 @@ def load_tree_index():
     """
     print("=== 加载树索引 ===")
     storage_manager = StorageManager()
-    storage_context = storage_manager.get_tree_index_storage_context()
+    storage_context = storage_manager.get_mongodb_storage_context(namespace="tree_index")
     
     # 从存储上下文加载索引
     index = TreeIndex.from_documents([], storage_context=storage_context)
@@ -87,7 +87,7 @@ def load_keyword_index():
     """
     print("=== 加载关键词索引 ===")
     storage_manager = StorageManager()
-    storage_context = storage_manager.get_keyword_index_storage_context()
+    storage_context = storage_manager.get_mongodb_storage_context(namespace="keyword_index")
     
     # 从存储上下文加载索引
     index = KeywordTableIndex.from_documents([], storage_context=storage_context)

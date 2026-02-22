@@ -226,10 +226,10 @@ def main():
     documents = load_documents(file_path)
     nodes = chunk_documents(documents, chunk_size=1024, chunk_overlap=20)
     
-    # vector_index = create_vector_index(nodes)
-    # summary_index = create_summary_index(nodes)
-    # tree_index = create_tree_index(nodes)
-    # keyword_index = create_keyword_index(nodes)
+    vector_index = create_vector_index(nodes)
+    summary_index = create_summary_index(nodes)
+    tree_index = create_tree_index(nodes)
+    keyword_index = create_keyword_index(nodes)
     property_graph_index = create_property_graph_index(nodes)
     
     print("\n" + "=" * 50)
