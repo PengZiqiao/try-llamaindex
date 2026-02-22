@@ -9,7 +9,7 @@ from llama_index.core.extractors import SummaryExtractor
 from llama_index.core.ingestion import IngestionPipeline
 from llama_index.core.response_synthesizers import get_response_synthesizer
 from storage import StorageManager
-from models import llm, embed_model
+from models import zhipu_llm as llm, embed_model
 from langfuse import get_client
 from openinference.instrumentation.llama_index import LlamaIndexInstrumentor
 
@@ -60,7 +60,7 @@ def chunk_documents(documents, chunk_size=1024, chunk_overlap=20):
     )
     nodes = node_parser.get_nodes_from_documents(documents, show_progress=True)
     print(f"文档分块完成，共生成 {len(nodes)} 个节点")
-    return nodes[:2]
+    return nodes[:1]
 
 
 def create_vector_index(nodes):
@@ -114,7 +114,8 @@ def create_summary_index(nodes):
     # 使用树形摘要模式异步生成高质量层次化摘要
     response_synthesizer = get_response_synthesizer(
         response_mode="tree_summarize",
-        use_async=True
+        use_async=True,
+        llm=llm
     )
     
     index = DocumentSummaryIndex(

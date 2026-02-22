@@ -11,6 +11,10 @@ llama-index-graph-stores-neo4j>=0.1.0
 # LlamaIndex LLM 和 Embedding
 llama-index-llms-google-genai>=0.1.0
 llama-index-embeddings-google-genai>=0.1.0
+llama-index-llms-openai-like>=0.1.0
+
+# OpenAI 客户端库（OpenAILike 依赖）
+openai>=1.0.0
 
 # 第三方存储客户端
 pinecone-client>=3.0.0

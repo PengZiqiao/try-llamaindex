@@ -1,8 +1,10 @@
 import dotenv
+import os
 import time
 import asyncio
 from typing import List
 from llama_index.llms.google_genai import GoogleGenAI
+from llama_index.llms.openai_like import OpenAILike
 from llama_index.embeddings.google_genai import GoogleGenAIEmbedding
 from google.genai.types import EmbedContentConfig
 from langfuse import get_client
@@ -205,6 +207,33 @@ embed_model = RateLimitedGoogleGenAIEmbedding(
 )
 
 
+# NVIDIA GLM-4.7 模型（使用 OpenAI 兼容接口）
+# NVIDIA NIM 平台提供免费的 GLM-4.7 模型调用
+# API 地址: https://integrate.api.nvidia.com/v1
+# 模型名称: z-ai/glm4.7
+nvidia_llm = OpenAILike(
+    model="z-ai/glm4.7",
+    api_base="https://integrate.api.nvidia.com/v1",
+    api_key=os.environ.get("NVIDIA_API_KEY"),
+    context_window=128000,
+    is_chat_model=True,
+    is_function_calling_model=False,
+)
+
+# 智谱 GLM-4.7-Flash 模型（使用 OpenAI 兼容接口）
+# 智谱 AI 提供与 OpenAI API 兼容的接口
+# API 地址: https://open.bigmodel.cn/api/paas/v4
+# 模型名称: glm-4.7-flash
+zhipu_llm = OpenAILike(
+    model="glm-4.7-flash",
+    api_base="https://open.bigmodel.cn/api/paas/v4",
+    api_key=os.environ.get("ZHIPU_API_KEY"),
+    context_window=128000,
+    is_chat_model=True,
+    is_function_calling_model=False,
+)
+
+
 if __name__ == "__main__":
     # 测试llm
     resp = llm.complete("直接回复我hello world")
@@ -219,3 +248,13 @@ if __name__ == "__main__":
     embeddings = embed_model.get_query_embedding("这是问题")
     print(f"Query Embedding 维度: {len(embeddings)}")
     print(embeddings[:5])
+
+    # 测试 NVIDIA GLM-4.7 模型
+    print("\n=== 测试 NVIDIA GLM-4.7 模型 ===")
+    nvidia_resp = nvidia_llm.complete("你好，请用中文回复我")
+    print(nvidia_resp)
+
+    # 测试智谱 GLM-4.7-Flash 模型
+    print("\n=== 测试智谱 GLM-4.7-Flash 模型 ===")
+    zhipu_resp = zhipu_llm.complete("你好，请用中文回复我")
+    print(zhipu_resp)
